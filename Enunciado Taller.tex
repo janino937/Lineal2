@@ -1,0 +1,876 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\author{Jonathan Niño}
+\title{Álgebra Lineal II: Taller}
+
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}[thm]{Lema}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definición}[section]
+\newtheorem{conj}{Conjetura}[section]
+\newtheorem{exmp}{Ejemplo}[section]
+\theoremstyle{remark}
+\newtheorem*{rem}{Observación}
+\newtheorem*{note}{Nota}
+\newtheorem{case}{Caso}
+\newtheorem{exc}{Ejercicio}
+\newtheorem{prop}{Proposición}
+
+\newcommand{\abs}[1]{ \left\lbrace #1 \right\rbrace }
+\newcommand{\set}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\CC}{\mathbb{C}}
+\begin{document}
+	\maketitle
+	Para esta tarea, utilizamos las siguientes definiciones:
+	
+	\begin{defn}
+		Decimos que $ f $ es \textit{semi-simple} si para todo $ V_1 \leq V $ invariante bajo $ f $ existe $ V_2 \leq V$ invariante bajo $ f $ tal que $ V = V_1 \oplus V_2  $.
+	\end{defn}
+	
+	\begin{defn}
+		El \emph{polinomio minimal } de $ f $, $ P_{f, \min}(t) \in K[t] $ es el polinomio de menor grado tal que $ P_{f,\min}(f) = 0 $
+	\end{defn}
+	
+\begin{exc}
+	Demuestre que el polinomio minimal divide al polinomio característico. (\textit{Ayuda}: usando el algoritmo de la división, divida el polinomio característico por el polinomio minimal para obtener un residuo y verifique que este es igual a cero. )
+\end{exc}
+	
+\begin{proof}
+	Dividiendo $ P_f(x) $ por $ P_{f,min}(x) $ obtenemos dos polinomios $ Q(x) $ y $ R(x) $ tales que 
+	
+	\begin{equation}
+	P_f(x)=Q(x)P_{f,min}(x)+R(x) \nonumber
+	\end{equation} 
+	
+	y $ deg(R)<deg(P_{f,min}) $.
+	
+	Ahora si evaluamos estos polinomios tenemos que $ P_f(f)=0 $ por el teorema de Calley-Hamilton y $ P_{f,min}=0 $ por la definición del polinomio minimal. Concluimos por lo tanto que $ R(f)=0 $. Entonces para no contradecir la minimalidad del polinomio minimal concluimos que $ R(x)=0 $. Por lo tanto, el polinomio característico es un múltiplo del polinomio minimal.
+\end{proof}	
+	
+\begin{exc}
+	Sea $ \lambda \in K $ y defina $ f \in \Hom_K(K^2,K^2) $ por:
+	\[ f(x,y) = (\lambda x + y, \lambda y) \]
+	Verifique que $ f $ no es semi-simple. Encuentre el polinomio minimal de $ f $
+\end{exc}	
+
+\textit{Solución}
+La matriz asociada a esta transformación es
+
+\begin{equation}
+A=\begin{pmatrix}
+\lambda & 1
+\\0 & \lambda
+\end{pmatrix} \nonumber
+\end{equation}
+
+Y el polinomio característico se calcula como
+
+\begin{equation}
+\begin{vmatrix}
+t-\lambda & -1
+\\0 & t- \lambda
+\end{vmatrix} = (t-\lambda)^2 \nonumber
+\end{equation}.
+
+Por el punto anterior, el polinomio minimal en este caso puede ser $ t-\lambda $ o $ (t-\lambda)^2 $. Pero para descartar el primer caso podemos tomar por ejemplo el vector $ (0,1) $. Tenemos que $ (f-\lambda Id)(0,1)=(1,\lambda)-(0,\lambda)=(1,0) \not = (0,0)$. Por lo tanto, el polinomio minimal es $ (t-\lambda)^2 $.
+
+Para demostrar que nos es semi-simple podemos tomar el espacio generado por $ (1,0) $ que es invariante pues para cualquier $ (a,0) $ tenemos que $ f(a,0)=(a\lambda,0)\in Sp((1,0)) $. Ahora cualquier otro espacio tal que su suma directa sea todo $ K^2 $ es de la forma $ Sp((x,y)) $ con $ y \not = 0 $. Entonces tenemos que $ f(ax,ay)=(ax\lambda+ay,ay\lambda) $ que no se encuentra en $ Sp(x,y) $ porque $ ay \not = 0 $. Concluimos que $ f $ no es semi-simple. 
+\begin{exc}
+	Sea $ \lambda \in K $ y defina $ f \in \Hom_K(K^2, K^2) $ por:
+	\[ f(x,y) = (\lambda x, \lambda y) \]
+	Encuentre el polinomio minimal de $ f $. Verifique que $ f $ es semi-simple.
+\end{exc}
+
+\textit{Solución}
+
+Esta transformación es precisamente multiplicación por $ \lambda $, es decir, $ f= \lambda Id $. El polinomio característico de esta transformación es el mismo que el anterior $ (t- \lambda)^2 $ pero en este caso el polinomio minimal si es $ t-\lambda $. Esto porque $ f-\lambda Id = \lambda Id - \lambda Id = 0 $. Esta transformación es semi-simple porque cualquier subespacio $ V $ es invariante, pues $ f(V)= \lambda V \subseteq V $. Luego si tomamos cualquier espacio invariante $ V $ podemos encontrar otro espacio invariante $ U $ utilizando extensión de bases por ejemplo tal que $ U \oplus V = K^2 $ y $ U $ también es invariante por lo anterior.
+
+\begin{exc}
+	Considere los operadores $ g,h \in \Hom_\RR (\RR^4, \RR^4) $ definidos por:
+	\begin{align*}
+	g(x,y,z,w) = \left( \frac{\sqrt{3}}{2}x + \frac{1}{2}w, \frac{\sqrt{3}}{2}y + \frac{1}{2}z, -\frac{1}{2}y + \frac{\sqrt{3}}{2}z, - \frac{1}{2}x + \frac{\sqrt{3}}{2} w \right) \\
+	h(x,y,z,w) = \left( \frac{\sqrt{3}}{2}x + \frac{1}{2}z, \frac{\sqrt{3}}{2}y +z - \frac{1}{2}w, \frac{1}{2}x-y+ \frac{\sqrt{3}}{2}z, - \frac{1}{2}y + \frac{\sqrt{3}}{2}w \right)	\end{align*}
+	y los operadores $ g_\CC $ y $  H_\CC \in \Hom_\CC ( \CC^4, \CC^4) $ dadas por las mismas fórmulas.
+	\begin{enumerate}
+		\item Verifique que $ g $ y $ h $ no tiene valores propios y que los valores propios de $ g_\CC $ y $ h_\CC $ son $ \lambda = \frac{1}{2}(\sqrt{3} + i-) $ y $ \bar{\lambda} = \frac{1}{2}(\sqrt{3} - i) $.
+		\item Verifique que si $ u + iv $, con $ u,v \in \RR^4 $, es un vector propio de $ g_\CC $ asociado a $ \lambda $, entonces $ u - iv $ es un vector propio de $ g_\CC $ asociado a $ \bar{\lambda} $
+		\item Encuentre una base de Jordan para $ g_\CC $ y para $ h_\CC $ de la forma $ T = \set{u_1 + i v_1, u_2 + i v_2, u_1 - i v_1, u_2 - iv_2 } $
+		\item Usando la notación de los vectores en el numeral anterior, encuentre la representación matricial de $ g $ y $ h $ relativas a la base $ S = \set{u_1, - v_1, u_2, -v_2} $ 
+		\item Encuentre los polinomios minimales de $ g $ y $ h $
+	\end{enumerate}
+	\textit{Solución}
+	
+		\begin{enumerate}
+		\item La matriz asociada al operador $ g $ es 
+		\begin{equation}
+		A= \begin{pmatrix}
+		\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+		\\ 0 & \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 
+		\\ 0 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+		\\ -\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+		\end{pmatrix} \nonumber
+		\end{equation}
+		
+		Y el polinomio característico de $ g $ es
+		\begin{multline}
+		\begin{vmatrix}
+		t-\frac{\sqrt{3}}{2} & 0 & 0 & -\frac{1}{2}
+			\\ 0 & t-\frac{\sqrt{3}}{2} & -\frac{1}{2} & 0 
+			\\ 0 & \frac{1}{2} & t-\frac{\sqrt{3}}{2} & 0
+			\\ \frac{1}{2} & 0 & 0 & t-\frac{\sqrt{3}}{2}
+		\end{vmatrix}\nonumber = (t- \frac{\sqrt{3}}{2})
+		\begin{vmatrix}
+				 t-\frac{\sqrt{3}}{2} & -\frac{1}{2} & 0 
+				\\\frac{1}{2} & t-\frac{\sqrt{3}}{2} & 0
+				\\0 & 0 & t-\frac{\sqrt{3}}{2}
+			\end{vmatrix} \\
+			-(-\frac{1}{2})\begin{vmatrix}
+				0 & t-\frac{\sqrt{3}}{2} & -\frac{1}{2}
+					\\ 0 & \frac{1}{2} & t-\frac{\sqrt{3}}{2}
+					\\ \frac{1}{2} & 0 & 0
+				\end{vmatrix}\nonumber = (t-\frac{\sqrt{3}}{2})^2\begin{vmatrix}
+							 t-\frac{\sqrt{3}}{2} & -\frac{1}{2}
+							\\\frac{1}{2} & t-\frac{\sqrt{3}}{2}
+						\end{vmatrix}+(\frac{1}{2})^2\begin{vmatrix}
+									t-\frac{\sqrt{3}}{2} & -\frac{1}{2}
+										\\ \frac{1}{2} & t-\frac{\sqrt{3}}{2}
+									\end{vmatrix}
+		\\=(t-\frac{\sqrt{3}}{2})^2((t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2)+(\frac{1}{2})^2((t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2)
+		\\=((t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2)((t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2)=((t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2)^2
+		\end{multline}
+		
+		Vemos que este polinomio no tiene raíces en $ \mathbb{R} $ porque $ (t-\frac{\sqrt{3}}{2})^2 $ es mayor o igual a 0. Luego, $ (t-\frac{\sqrt{3}}{2})^2 + (\frac{1}{2})^2$ es estrictamente mayor que 0 y también su cuadrado.
+		
+	    En $ \mathbb{C} $ este polinomio si tiene raíces. La descomposición esta dada por la fórmula para factorizar resta de cuadrados.
+	    \begin{equation}
+	    ((t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2)^2=((t-\frac{\sqrt{3}}{2})^2-(i\frac{1}{2})^2)^2=(t-\frac{\sqrt{3}}{2}-i\frac{1}{2})^2(t-\frac{\sqrt{3}}{2}+i\frac{1}{2})^2\nonumber
+	    \end{equation}
+	    Concluimos que $ \frac{\sqrt{3}}{2}+i\frac{1}{2} $ y $ \frac{\sqrt{3}}{2}-i\frac{1}{2} $ son las dos raices del polinomio caracteristico.
+	    
+	    Para el operador $ h $ la matriz asociada es \begin{equation}
+	    	B= \begin{pmatrix}
+	    	\frac{\sqrt{3}}{2} & 0 & \frac{1}{2} & 0
+	    	\\ 0 & \frac{\sqrt{3}}{2} & 1 & -\frac{1}{2} 
+	    	\\ \frac{1}{2} & -1 & \frac{\sqrt{3}}{2} & 0
+	    	\\ 0 & -\frac{1}{2} & 0 & \frac{\sqrt{3}}{2}
+	    	\end{pmatrix} \nonumber
+	    	\end{equation}
+		
+		El polinomio característico es
+			
+			\begin{multline}
+			    	\begin{vmatrix}
+			    	t-\frac{\sqrt{3}}{2} & 0 & -\frac{1}{2} & 0
+			    	\\ 0 & t-\frac{\sqrt{3}}{2} & -1 & \frac{1}{2} 
+			    	\\ -\frac{1}{2} & 1 & t-\frac{\sqrt{3}}{2} & 0
+			    	\\ 0 & \frac{1}{2} & 0 & t-\frac{\sqrt{3}}{2}
+			    	\end{vmatrix} = (t-\frac{\sqrt{3}}{2})
+			    	\begin{vmatrix}
+		 		    	t-\frac{\sqrt{3}}{2} & -1 & \frac{1}{2} 
+		 		    	\\ 1 & t-\frac{\sqrt{3}}{2} & 0
+		 		    	\\ \frac{1}{2} & 0 & t-\frac{\sqrt{3}}{2}
+		 		    \end{vmatrix}\nonumber
+		 		    \\+(-\frac{1}{2})\begin{vmatrix}
+		 		    	    	0 & t-\frac{\sqrt{3}}{2} & \frac{1}{2} 
+		 		    	    	\\ -\frac{1}{2} & 1 & 0
+		 		    	    	\\ 0 & \frac{1}{2} &  t-\frac{\sqrt{3}}{2}
+		 		    	    	\end{vmatrix} = (t-\frac{\sqrt{3}}{2})(\frac{1}{2}\begin{vmatrix}
+		 		    	    	 		    	 -1 & \frac{1}{2} 
+		 		    	    	 		    	\\t-\frac{\sqrt{3}}{2} & 0
+		 		    	    	 		    \end{vmatrix}+(t-\frac{\sqrt{3}}{2})\begin{vmatrix}
+		 		    	    	 		     		    	t-\frac{\sqrt{3}}{2} & -1 
+		 		    	    	 		     		    	\\ 1 & t-\frac{\sqrt{3}}{2}
+		 		    	    	 		     		    \end{vmatrix})\\
+		 		 +(-\frac{1}{2})(\frac{1}{2})\begin{vmatrix}
+		 		  		    	    	t-\frac{\sqrt{3}}{2} & \frac{1}{2}
+		 		  		    	    	\\ \frac{1}{2} &  t-\frac{\sqrt{3}}{2}
+		 		  		    	    	\end{vmatrix} = (t-\frac{\sqrt{3}}{2})(\frac{1}{2}(t-\frac{\sqrt{3}}{2})(-\frac{1}{2})+(t-\frac{\sqrt{3}}{2})((t-\frac{\sqrt{3}}{2})^2+1))\\
+		 		+(-\frac{1}{2})(\frac{1}{2})((t-\frac{\sqrt{3}}{2})^2-(\frac{1}{2})^2)= (t-\frac{\sqrt{3}}{2})^2((t-\frac{\sqrt{3}}{2})^2+\frac{3}{4})-(\frac{1}{2})^2 ((t-\frac{\sqrt{3}}{2})^2-\frac{1}{4})\\
+		 		=(t-\frac{\sqrt{3}}{2})^2((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4}+\frac{1}{2})-(\frac{1}{2})^2 ((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4}-\frac{1}{2})
+		 		\\ = (t-\frac{\sqrt{3}}{2})^2((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4})-(\frac{1}{2})^2 ((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4})+\frac{1}{2}(t-\frac{\sqrt{3}}{2})^2+(\frac{1}{2})^2\frac{1}{2}
+		 		\\ = ((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4})((t-\frac{\sqrt{3}}{2})^2-(\frac{1}{2})^2+\frac{1}{2})=((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4})((t-\frac{\sqrt{3}}{2})^2+\frac{1}{4}) \\
+		 		=((t-\frac{\sqrt{3}}{2})^2+\frac{1}{2}^2)^2\end{multline}
+		 		
+		 		Así que es el mismo polinomio característico que para el operador $ g $ y por lo tanto al igual que este, no tiene valores propios en $ \mathbb{R} $ y en $ \mathbb{C} $ son los mismos valores propios.
+		 		
+		 		\item 
+		 		
+		 		Primero demostremos que para cualquier $ z \in \mathbb{C} $, $ g_\mathbb{C}(\overline{z})=g_\mathbb{C}\overline{f(z)} $, esto es así porque todos los términos de la matriz de $ g_\mathbb{C} $ son reales. Notese que $ h_\mathbb{C} $ también cumple esta condición por lo que lo anterior también vale para $ h_\mathbb{C} $.
+		 		
+		 		Sea $ z = u+iv $ con $ u,v \in \mathbb{R} $. Por linealidad tenemos que $ g_\mathbb{C}(z)=g_\mathbb{C}(u)+ig_\mathbb{C}(v) $, pero como $ u $ y $ v $ son reales $ g_\mathbb{C}(u) = g(u) \in \mathbb{R} $ y $ g_\mathbb{C}(v) = g(v) \in \mathbb{R} $. Por lo tanto, $ g(u) $ es la parte real de $ g_\mathbb{C}(z) $ y $ g(v) $ es la parte imaginaria de $ g_\mathbb{C}(z) $.
+		 		
+		 		Ahora, el conjugado de $ z $ es $ u-iv $. $ g_\mathbb{C}(\overline{z})=g_\mathbb{C}(u)-ig_\mathbb{C}(v)=g(u)-ig(v) $. Vemos que la parte real es la misma que la anterior y la parte imaginaria es el opuesto aditivo de la anterior. Por lo tanto, es el conjugado de la anterior, es decir, $ \overline{g(z)} $.
+		 		
+		 		Ahora sea $ z=u+iv $ un vector propio asociado a $ \lambda=\alpha+i\beta $. Entonces, $ \overline{z}=u-iv $ es un vector propio asociado a $  \overline{\lambda} $.
+		 		La primera oración se traduce en que $ f(z)=\lambda z $. Por propiedades de conjugación tenemos que $ \overline{\lambda z}=\overline{z}\overline{\lambda} $. Luego $ f(\overline{z})=\overline{f(z)}= \overline{\lambda z}=\overline{z}\overline{\lambda} $. Por lo que vemos que $ \overline{z} $ es el vector propio asociado a $ \overline{\lambda} $. 
+				
+				\item Para hallar una base canónica de Jordan para $ g_\mathbb{C} $ primero necesitamos calcular los vectores propios asociados a cada valor propio. Para esto primero necesitamos calcular el kernel de $ \lambda Id-g_\mathbb{C}$. La matriz asociada es
+				
+				\begin{equation}
+				\begin{pmatrix}
+				\lambda-\frac{\sqrt{3}}{2} & 0 & 0 & -\frac{1}{2}				\\ 0 & \lambda-\frac{\sqrt{3}}{2} & -\frac{1}{2} & 0 
+									\\ 0 & \frac{1}{2} & \lambda-\frac{\sqrt{3}}{2} & 0
+									\\ \frac{1}{2} & 0 & 0 & \lambda-\frac{\sqrt{3}}{2}
+							\end{pmatrix} =
+							\begin{pmatrix}
+							i\frac{1}{2} & 0 & 0 & -\frac{1}{2}
+									\\ 0 & i\frac{1}{2} & -\frac{1}{2} & 0 
+									\\ 0 & \frac{1}{2} & i\frac{1}{2} & 0
+									\\ \frac{1}{2} & 0 & 0 & i\frac{1}{2}
+							\end{pmatrix}\nonumber
+							\end{equation}
+							
+							Reduciendo por Gauss-Jordan obtenemos
+							\begin{multline}
+							\begin{pmatrix}
+							i\frac{1}{2} & 0 & 0 & -\frac{1}{2}
+							\\ 0 & i\frac{1}{2} & -\frac{1}{2} & 0 
+							\\ 0 & \frac{1}{2} & i\frac{1}{2} & 0
+							\\ \frac{1}{2} & 0 & 0 & i\frac{1}{2}
+							\end{pmatrix} \Rightarrow
+							\begin{pmatrix}
+							i & 0 & 0 & -1
+							\\ 0 & i & -1 & 0 
+							\\ 0 & 1 & i & 0
+							\\ 1 & 0 & 0 & i
+							\end{pmatrix} \Rightarrow
+							\begin{pmatrix}
+							1 & 0 & 0 & i
+							\\ 0 & 1 & i & 0
+							\\ 0 & i & -1 & 0 
+							\\ i & 0 & 0 & -1
+							\end{pmatrix}
+							\Rightarrow
+							\\ \begin{pmatrix}
+							1 & 0 & 0 & i
+							\\ 0 & 1 & i & 0
+							\\ 0 & -1 & -i & 0 
+							\\ -1 & 0 & 0 & -i
+							\end{pmatrix}
+							\Rightarrow
+							\begin{pmatrix}
+							1 & 0 & 0 & i
+							\\ 0 & 1 & i & 0
+							\\ 0 & 0 & 0 & 0 
+							\\ 0 & 0 & 0 & 0
+							\end{pmatrix}
+							 \nonumber		
+							\end{multline}
+							
+							Entonces vemos que el kernel es de dimensión 2, es decir que tiene dos vectores asociados. Estos vectores son $ (1, 0,0,i) $ y $ (0,1,i,0) $. Por el punto anterior los vectores propios asociados a $ \overline{\lambda} $ serían $ (1, 0,0,-i) $ y $ (0,1,-i,0) $. Por lo tanto si tomamos $ u_1 = (1,0,0,0) $, $ u_2=(0,1,0,0) $, $ v_1=(0,0,0,1) $ y $ v_2 = (0,0,1,0) $ la base canónica de Jordan sería precisamente $ T = \set{u_1 + i v_1, u_2 + i v_2, u_1 - i v_1, u_2 - iv_2 } $ .
+							
+							Para $ h_\mathbb{C} $ debemos calcular el kernel de $ \lambda Id-h_\mathbb{C} $. La matriz asociada es
+							
+							\begin{equation}
+							\begin{pmatrix}
+					    	\lambda-\frac{\sqrt{3}}{2} & 0 & -\frac{1}{2} & 0
+					    	\\ 0 & \lambda-\frac{\sqrt{3}}{2} & -1 & \frac{1}{2} 
+					    	\\ -\frac{1}{2} & 1 & \lambda-\frac{\sqrt{3}}{2} & 0
+					    	\\ 0 & \frac{1}{2} & 0 & \lambda-\frac{\sqrt{3}}{2}
+					    	\end{pmatrix} = 
+					    	\begin{pmatrix}
+					    	i\frac{1}{2} & 0 & -\frac{1}{2} & 0
+					    	\\ 0 & i\frac{1}{2} & -1 & \frac{1}{2} 
+					    	\\ -\frac{1}{2} & 1 & i\frac{1}{2} & 0
+					    	\\ 0 & \frac{1}{2} & 0 & i\frac{1}{2}
+					    	\end{pmatrix} \nonumber
+							\end{equation}
+						
+						De nuevo reducimos mediante Gauss-Jordan para obtener 
+						\begin{multline}
+						\begin{pmatrix}
+				    	i\frac{1}{2} & 0 & -\frac{1}{2} & 0
+				    	\\ 0 & i\frac{1}{2} & -1 & \frac{1}{2} 
+				    	\\ -\frac{1}{2} & 1 & i\frac{1}{2} & 0
+				    	\\ 0 & \frac{1}{2} & 0 & i\frac{1}{2}
+				    	\end{pmatrix}  \Rightarrow
+				    	\begin{pmatrix}
+				    	1 & 0 & i & 0
+				    	\\ 0 & 1 & 2i & -i 
+				    	\\ i & -2i & 1 & 0
+				    	\\ 0 & -i & 0 & 1
+				    	\end{pmatrix}  \Rightarrow
+				    	\begin{pmatrix}
+				    	1 & 0 & i & 0
+				    	\\ 0 & 1 & 2i & -i 
+				    	\\ -1 & 2 & i & 0
+				    	\\ 0 & -1 & 0 & -i
+				    	\end{pmatrix}  \Rightarrow \\
+				    	\begin{pmatrix}
+				    	1 & 0 & i & 0
+				    	\\ 0 & 1 & 2i & -i 
+				    	\\ 0 & 2 & 2i & 0
+				    	\\ 0 & 0 & 2i & -2i
+				    	\end{pmatrix}  \Rightarrow
+				    	\nonumber
+				    	\begin{pmatrix}
+				    	1 & 0 & i & 0
+				    	\\ 0 & 1 & 2i & -i 
+				    	\\ 0 & 0 & -2i & 2i
+				    	\\ 0 & 0 & 2i & -2i
+				    	\end{pmatrix}  \Rightarrow
+				    	\begin{pmatrix}
+				    	1 & 0 & i & 0
+				    	\\ 0 & 1 & 2i & -i 
+				    	\\ 0 & 0 & 1 & -1
+				    	\\ 0 & 0 & 0 & 0
+				    	\end{pmatrix}\Rightarrow
+				    	\\\begin{pmatrix}
+				    	1 & 0 & 0 & i
+				    	\\ 0 & 1 & 0 & i 
+				    	\\ 0 & 0 & 1 & -1
+				    	\\ 0 & 0 & 0 & 0
+				    	\end{pmatrix}
+						\end{multline}
+						
+						En este caso el kernel es solo de una dimensión y es el generado por el vector $ (-i,-i,1,1) $.
+						
+						Ahora necesitamos calcular el kernel de $ (\lambda Id-h_\mathbb{C})^2 $ . La matriz asociada es
+						
+		\begin{equation}
+			\begin{pmatrix}
+		  	i\frac{1}{2} & 0 & -\frac{1}{2} & 0
+		  	\\ 0 & i\frac{1}{2} & -1 & \frac{1}{2} 
+		  	\\ -\frac{1}{2} & 1 & i\frac{1}{2} & 0
+	    	\\ 0 & \frac{1}{2} & 0 & i\frac{1}{2}
+	    	\end{pmatrix}
+	    	\begin{pmatrix}
+	    	i\frac{1}{2} & 0 & -\frac{1}{2} & 0
+	    	\\ 0 & i\frac{1}{2} & -1 & \frac{1}{2} 
+	    	\\ -\frac{1}{2} & 1 & i\frac{1}{2} & 0
+	    	\\ 0 & \frac{1}{2} & 0 & i\frac{1}{2}
+	    	\end{pmatrix} =
+	    	\begin{pmatrix}
+	    	0 & -\frac{1}{2} & -i\frac{1}{2} & 0
+	    	\\ \frac{1}{2} & -1 & -i & i\frac{1}{2} 
+	    	\\ -i\frac{1}{2} & i & -1 & \frac{1}{2}
+	    	\\ 0 & i\frac{1}{2} & -\frac{1}{2} & 0
+	    	\end{pmatrix} \nonumber
+			\end{equation}
+			
+			Y para averiguar su kernel reducimos esta matriz usando Gauss-Jordan.
+			
+			\begin{multline}
+			\begin{pmatrix}
+	    	0 & -\frac{1}{2} & -i\frac{1}{2} & 0
+	    	\\ \frac{1}{2} & -1 & -i & i\frac{1}{2} 
+	    	\\ -i\frac{1}{2} & i & -1 & \frac{1}{2}
+	    	\\ 0 & i\frac{1}{2} & -\frac{1}{2} & 0
+	    	\end{pmatrix} \Rightarrow
+			\begin{pmatrix}
+	    	 1 & -2 & -2i & i 
+	    	\\0 & 1 & i & 0
+	    	\\ -1 & 2 & 2i & -i
+	    	\\ 0 & -1 & -i & 0
+	    	\end{pmatrix} \nonumber \Rightarrow
+	    	\begin{pmatrix}
+	   	 	1 & 0 & 0 & i 
+	    	\\0 & 1 & i & 0
+	    	\\ 0 & 0 & 0 & 0
+	    	\\ 0 & 0 & 0 & 0
+	 	    	\end{pmatrix}
+			\end{multline}
+			
+			Entonces vemos que el vector $ (-i,0,0,1) $ es un vector del segundo nivel pues no esta incluido en el kernel anterior. Y $ (\lambda Id - h_\mathcal{C})(-i,0,0,1) = (\frac{1}{2},\frac{1}{2},i\frac{1}{2},i\frac{1}{2}) $ sería el segundo vector de la base de Jordan. 
+			
+			Por el segundo punto tenemos que $ (\frac{1}{2},\frac{1}{2},-i\frac{1}{2},-i\frac{1}{2}) $ esta en el kernel de $ (\overline{\lambda} Id - h_\mathcal{C}) $. Ahora para calcular un vector del segundo nivel tenemos que calcular el kernel de $ (\overline{\lambda} Id - h_\mathcal{C})^2 $.
+			
+			Pero observemos que $ (i,0,0,1) $ está en este kernel y no en el kernel anterior.
+			
+			\begin{equation}
+			(\overline{\lambda} Id - h_\mathcal{C})(i,0,0,1) = 
+			\begin{pmatrix}
+		  	-i\frac{1}{2} & 0 & -\frac{1}{2} & 0
+		  	\\ 0 & -i\frac{1}{2} & -1 & \frac{1}{2} 
+		  	\\ -\frac{1}{2} & 1 & -i\frac{1}{2} & 0
+	    	\\ 0 & \frac{1}{2} & 0 & -i\frac{1}{2}
+	    	\end{pmatrix}
+	    	\begin{pmatrix}
+		  	i
+		  	\\ 0  
+		  	\\  0
+	    	\\ 1
+	    	\end{pmatrix} = 
+	    	\begin{pmatrix}
+		  	\frac{1}{2}
+		  	\\ \frac{1}{2}  
+		  	\\  -i\frac{1}{2}
+	    	\\ -i\frac{1}{2}
+	    	\end{pmatrix}
+	    	 \nonumber
+			\end{equation}
+			
+			Y tenemos que $ (\overline{\lambda} Id - h_\mathcal{C})(\frac{1}{2},\frac{1}{2},-i\frac{1}{2},-i\frac{1}{2})=(0,0,0,0) $ por el punto anterior. Luego si tomamos $ u_1 = (0,0,0,1) $, $ v_1 = (1,0,0,0) $, $ u_2 = (\frac{1}{2}, \frac{1}{2},0,0)$ y $ v_2=(0,0,\frac{1}{2},\frac{1}{2}) $. La base $ T = \set{u_1 + i v_1, u_2 + i v_2, u_1 - i v_1, u_2 - iv_2 } $ es una base canónica de Jordan.
+			
+			\item Primero calculemos la matriz de transformación de la nueva base sugerida a la base canónica. Para $ g $ esta sería.
+			
+			\begin{equation}
+			[id]_{S}^{can}= 
+			\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 1 & 0  
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & -1 & 0 & 0
+			\end{pmatrix} \nonumber
+			\end{equation}
+			
+			La matriz inversa $ [id]_{can}^{S} $ la podemos calcular usando Gauss-Jordan.
+			
+			\begin{multline}
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 1 & 0  
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & -1 & 0 & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 1 & 0 & 0  
+			\\ 0 & 0 & 1 & 0
+			\\ 0 & 0 & 0 & 1
+			\end{bmatrix}
+			\nonumber \Rightarrow 
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & -1 & 0 & 0
+			\\ 0 & 0 & 1 & 0  
+			\\ 0 & 0 & 0 & -1
+			\end{bmatrix}
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 0 & 1
+			\\ 0 & 1 & 0 & 0  
+			\\ 0 & 0 & 1 & 0
+			\end{bmatrix} \Rightarrow
+			\\ 
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 1 & 0 & 0
+			\\ 0 & 0 & 1 & 0  
+			\\ 0 & 0 & 0 & 1
+			\end{bmatrix}
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & 1 & 0 & 0  
+			\\ 0 & 0 & -1 & 0
+			\end{bmatrix}
+			\end{multline}
+			
+			Así que  
+			
+			\begin{equation}
+			[id]_{can}^S=\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & 1 & 0 & 0  
+			\\ 0 & 0 & -1 & 0
+			\end{pmatrix} \nonumber
+			\end{equation}
+			
+			Entonces la representación matricial de $ g $ en esta base esta dada por
+			\begin{eqnarray}
+			[g]_S^S & = & [id]_{can}^S[g]_{can}^{can}[id]_S^{can}\nonumber
+			\\ & = & 
+			\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & 1 & 0 & 0  
+			\\ 0 & 0 & -1 & 0
+			\end{pmatrix}
+			\begin{pmatrix}
+			\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\\ 0 & \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 
+			\\ 0 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+			\\ -\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\end{pmatrix} 
+			\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 1 & 0  
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & -1 & 0 & 0
+			\end{pmatrix} \nonumber
+			\\ & = &
+			\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 0 & 0 & -1
+			\\ 0 & 1 & 0 & 0  
+			\\ 0 & 0 & -1 & 0
+			\end{pmatrix}
+			\begin{pmatrix}
+			\frac{\sqrt{3}}{2} & -\frac{1}{2} & 0 & 0
+			\\ 0 & 0 & \frac{\sqrt{3}}{2} & -\frac{1}{2}  
+			\\ 0 & 0 & -\frac{1}{2} & -\frac{\sqrt{3}}{2}
+			\\ -\frac{1}{2} & -\frac{\sqrt{3}}{2} & 0 & 0
+			\end{pmatrix} \nonumber
+			\\ & = & 
+			\begin{pmatrix}
+			\frac{\sqrt{3}}{2} & -\frac{1}{2} & 0 & 0
+			\\ \frac{1}{2} & \frac{\sqrt{3}}{2} & 0 & 0
+			\\ 0 & 0 & \frac{\sqrt{3}}{2} & -\frac{1}{2}  
+			\\ 0 & 0 & \frac{1}{2} & \frac{\sqrt{3}}{2}
+			\end{pmatrix} \nonumber
+			\end{eqnarray}
+			
+			Vemos que logramos diagonalizarla por bloques simples.
+			
+			Para $ h $ tenemos que la matriz de transformación de $ S $ a la inversa es
+			
+			\begin{equation}
+			[id]_{S}^{can} = 
+			\begin{pmatrix}
+			0 & -1 & \frac{1}{2} & 0
+			\\ 0 & 0 & \frac{1}{2} & 0
+			\\ 0 & 0 & 0 & -\frac{1}{2}  
+			\\ 1 & 0 & 0 & -\frac{1}{2}
+			\end{pmatrix} \nonumber
+			\end{equation}
+			
+			La matriz inversa de esta matriz la calculamos de nuevo usando Gauss-Jordan.
+			
+			\begin{multline}
+			\begin{bmatrix}
+			0 & -1 & \frac{1}{2} & 0
+			\\ 0 & 0 & \frac{1}{2} & 0
+			\\ 0 & 0 & 0 & -\frac{1}{2}  
+			\\ 1 & 0 & 0 & -\frac{1}{2}
+			\end{bmatrix}
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 1 & 0 & 0
+			\\ 0 & 0 & 1 & 0  
+			\\ 0 & 0 & 0 & 1
+			\end{bmatrix} \nonumber \Rightarrow
+			\begin{bmatrix}
+			1 & 0 & 0 & -\frac{1}{2}
+			\\ 0 & -1 & \frac{1}{2} & 0
+			\\ 0 & 0 & \frac{1}{2} & 0
+			\\ 0 & 0 & 0 & -\frac{1}{2}  
+			\end{bmatrix}
+			\begin{bmatrix}
+			0 & 0 & 0 & 1
+			\\ 1 & 0 & 0 & 0
+			\\ 0 & 1 & 0 & 0
+			\\ 0 & 0 & 1 & 0  		
+			\end{bmatrix} \Rightarrow
+			\\
+			\begin{bmatrix}
+			1 & 0 & 0 & 0
+			\\ 0 & 1 & 0 & 0
+			\\ 0 & 0 & 1 & 0
+			\\ 0 & 0 & 0 & 1  
+			\end{bmatrix}
+			\begin{bmatrix}
+	 		0 & 0 & -1 & 1
+	 		\\ -1 & 1 & 0 & 0
+	 		\\ 0 & 2 & 0 & 0
+	 		\\ 0 & 0 & -2 & 0  		
+	 		\end{bmatrix}
+			\end{multline}
+			
+			Entonces concluimos que
+			
+			\begin{equation}
+			[id]_{can}^S = 
+			\begin{pmatrix}
+	 		0 & 0 & -1 & 1
+	 		\\ -1 & 1 & 0 & 0
+	 		\\ 0 & 2 & 0 & 0
+	 		\\ 0 & 0 & -2 & 0  		
+	 		\end{pmatrix} \nonumber 
+			\end{equation}
+			
+			Entonces la matriz de $ h $ en esta base esta dada por
+			\begin{eqnarray}
+			[h]_S^S & = & [id]_{can}^S[h]_{can}^{can}[id]_S^{can}\nonumber
+			\\ & = & 
+			\begin{pmatrix}
+	 		0 & 0 & -1 & 1
+	 		\\ -1 & 1 & 0 & 0
+	 		\\ 0 & 2 & 0 & 0
+	 		\\ 0 & 0 & -2 & 0  		
+	 		\end{pmatrix}
+			\begin{pmatrix}
+	    	\frac{\sqrt{3}}{2} & 0 & \frac{1}{2} & 0
+	    	\\ 0 & \frac{\sqrt{3}}{2} & 1 & -\frac{1}{2} 
+	    	\\ \frac{1}{2} & -1 & \frac{\sqrt{3}}{2} & 0
+	    	\\ 0 & -\frac{1}{2} & 0 & \frac{\sqrt{3}}{2}
+	    	\end{pmatrix} 
+			\begin{pmatrix}
+			0 & -1 & \frac{1}{2} & 0
+			\\ 0 & 0 & \frac{1}{2} & 0
+			\\ 0 & 0 & 0 & -\frac{1}{2}  
+			\\ 1 & 0 & 0 & -\frac{1}{2}
+			\end{pmatrix} \nonumber
+			\\ & = &
+			\begin{pmatrix}
+	 		0 & 0 & -1 & 1
+	 		\\ -1 & 1 & 0 & 0
+	 		\\ 0 & 2 & 0 & 0
+	 		\\ 0 & 0 & -2 & 0  		
+	 		\end{pmatrix} 
+			\begin{pmatrix}
+			0 & -\frac{\sqrt{3}}{2} & \frac{\sqrt{3}}{4} & -\frac{1}{4}
+			\\ -\frac{1}{2} & 0 & \frac{\sqrt{3}}{4} & -\frac{1}{4}
+			\\ 0 & -\frac{1}{2} & -\frac{1}{4} & -\frac{\sqrt{3}}{4}  
+			\\ \frac{\sqrt{3}}{2} & 0 & -\frac{1}{4} & -\frac{\sqrt{3}}{4}
+			\end{pmatrix} \nonumber 
+			\\ & = &
+			\begin{pmatrix}
+			\frac{\sqrt{3}}{2} & \frac{1}{2} & 0 & 0
+			\\ -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0 & 0
+			\\ -1 & 0 & \frac{\sqrt{3}}{2} & -\frac{1}{2}  
+			\\ 0 & 1 & \frac{1}{2} & \frac{\sqrt{3}}{2}
+			\end{pmatrix} \nonumber 
+			\end{eqnarray}
+			
+			Vemos que en este caso el resultado no fue una matriz diagonal por bloques.
+			
+			\item Por el punto 1 tenemos que el polinomio minimal divide al polinomio característico.
+			
+			Por lo tanto los polinomios candidatos a ser el polinomio minimal deben ser divisores del polinomio carácteristico. Es decir, puede ser $ (t-\frac{\sqrt{3}}{2})^2+\frac{1}{2}^2) $ o $ (t-\frac{\sqrt{3}}{2})^2+\frac{1}{2}^2)^2 $ 
+			
+			Para $ g $ el polinomio minimal es $ (t-\frac{\sqrt{3}}{2})^2+\frac{1}{2}^2) = t^2 -\sqrt{3}t+1$.
+			
+			Para verificar esto calculemos la matriz asociada a la transformación $ g^2-\sqrt{3}g+Id $.
+			
+			\begin{equation}
+			g^2 = \begin{pmatrix}
+			\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\\ 0 & \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 
+			\\ 0 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+			\\ -\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\end{pmatrix}
+			\begin{pmatrix}
+			\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\\ 0 & \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 
+			\\ 0 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+			\\ -\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\end{pmatrix}\nonumber =
+			\begin{pmatrix}
+			\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\\ 0 & \frac{1}{2} & \frac{\sqrt{3}}{2} & 0 
+			\\ 0 & -\frac{\sqrt{3}}{2} & \frac{1}{2} & 0
+			\\ -\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\end{pmatrix}
+			\end{equation}
+			
+			Entonces $ g^2-\sqrt{3}g+Id $ es .
+			\begin{eqnarray}
+			& &\begin{pmatrix}
+			\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\\ 0 & \frac{1}{2} & \frac{\sqrt{3}}{2} & 0 
+			\\ 0 & -\frac{\sqrt{3}}{2} & \frac{1}{2} & 0
+			\\ -\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\end{pmatrix}
+			-\sqrt{3}\begin{pmatrix}
+			\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\\ 0 & \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 
+			\\ 0 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+			\\ -\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\end{pmatrix}+
+			\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\0 & 1 & 0 & 0
+			\\0 & 0 & 1 & 0
+			\\0 & 0 & 0 & 1
+			\end{pmatrix} \nonumber
+			 \\&=&
+			\begin{pmatrix}
+			\frac{1}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\\ 0 & \frac{1}{2} & \frac{\sqrt{3}}{2} & 0 
+			\\ 0 & -\frac{\sqrt{3}}{2} & \frac{1}{2} & 0
+			\\ -\frac{\sqrt{3}}{2} & 0 & 0 & \frac{1}{2}
+			\end{pmatrix}
+			-\begin{pmatrix}
+			\frac{3}{2} & 0 & 0 & \frac{\sqrt{3}}{2}
+			\\ 0 & \frac{3}{2} & \frac{\sqrt{3}}{2} & 0 
+			\\ 0 & -\frac{\sqrt{3}}{2} & \frac{3}{2} & 0
+			\\ -\frac{\sqrt{3}}{2} & 0 & 0 & \frac{3}{2}
+			\end{pmatrix}+
+			\begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\0 & 1 & 0 & 0
+			\\0 & 0 & 1 & 0
+			\\0 & 0 & 0 & 1
+			\end{pmatrix} \nonumber
+			\\&=&
+			\begin{pmatrix}
+			0 & 0 & 0 & 0
+			\\0 & 0 & 0 & 0
+			\\0 & 0 & 0 & 0
+			\\0 & 0 & 0 & 0
+			\end{pmatrix} \nonumber
+			\end{eqnarray}
+			\end{enumerate}
+			
+			Entonces efectivamente este es el polinomio minimal.
+			
+			Para $ h $ el polinomio minimal es $ (t-\frac{\sqrt{3}}{2})^2+\frac{1}{2}^2)^2 $ para verificar esto solo basta comprobar que $ h^2-\sqrt{3}h+Id $ no es cero.
+			
+			\begin{equation}
+			h^2 =
+			\begin{pmatrix}
+	    	\frac{\sqrt{3}}{2} & 0 & \frac{1}{2} & 0
+	    	\\ 0 & \frac{\sqrt{3}}{2} & 1 & -\frac{1}{2} 
+	    	\\ \frac{1}{2} & -1 & \frac{\sqrt{3}}{2} & 0
+	    	\\ 0 & -\frac{1}{2} & 0 & \frac{\sqrt{3}}{2}
+	    	\end{pmatrix} 
+	    	\begin{pmatrix}
+   	    	\frac{\sqrt{3}}{2} & 0 & \frac{1}{2} & 0
+   	    	\\ 0 & \frac{\sqrt{3}}{2} & 1 & -\frac{1}{2} 
+   	    	\\ \frac{1}{2} & -1 & \frac{\sqrt{3}}{2} & 0
+   	    	\\ 0 & -\frac{1}{2} & 0 & \frac{\sqrt{3}}{2}
+   	    	\end{pmatrix}
+   	    	=\begin{pmatrix}
+   	    	1 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+   	    	\\ \frac{1}{2} & 0 & \sqrt{3} & -\frac{\sqrt{3}}{2} 
+   	    	\\ \frac{\sqrt{3}}{2} & -\sqrt{3} & 0 & \frac{1}{2}
+   	    	\\ 0 & -\frac{\sqrt{3}}{2} & -\frac{1}{2} & 1
+   	    	\end{pmatrix}\nonumber
+			\end{equation}
+			
+			Luego $ h^2-\sqrt{3}h+Id $ es
+			\begin{eqnarray}
+			& & \begin{pmatrix}
+   	    	1 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+   	    	\\ \frac{1}{2} & 0 & \sqrt{3} & -\frac{\sqrt{3}}{2} 
+   	    	\\ \frac{\sqrt{3}}{2} & -\sqrt{3} & 0 & \frac{1}{2}
+   	    	\\ 0 & -\frac{\sqrt{3}}{2} & -\frac{1}{2} & 1
+   	    	\end{pmatrix}\nonumber -
+   	    	\sqrt{3}\begin{pmatrix}
+   	    	\frac{\sqrt{3}}{2} & 0 & \frac{1}{2} & 0
+   	    	\\ 0 & \frac{\sqrt{3}}{2} & 1 & -\frac{1}{2} 
+   	    	\\ \frac{1}{2} & -1 & \frac{\sqrt{3}}{2} & 0
+   	    	\\ 0 & -\frac{1}{2} & 0 & \frac{\sqrt{3}}{2}
+   	    	\end{pmatrix}
+   	    	+ \begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\0 & 1 & 0 & 0
+			\\0 & 0 & 1 & 0
+			\\0 & 0 & 0 & 1
+			\end{pmatrix}
+			\\& = &
+			\begin{pmatrix}
+   	    	1 & -\frac{1}{2} & \frac{\sqrt{3}}{2} & 0
+   	    	\\ \frac{1}{2} & 0 & \sqrt{3} & -\frac{\sqrt{3}}{2} 
+   	    	\\ \frac{\sqrt{3}}{2} & -\sqrt{3} & 0 & \frac{1}{2}
+   	    	\\ 0 & -\frac{\sqrt{3}}{2} & -\frac{1}{2} & 1
+   	    	\end{pmatrix}\nonumber -
+   	    	\begin{pmatrix}
+   	    	\frac{3}{2} & 0 & \frac{\sqrt{3}}{2} & 0
+   	    	\\ 0 & \frac{3}{2} & \sqrt{3} & -\frac{\sqrt{3}}{2} 
+   	    	\\ \frac{\sqrt{3}}{2} & -\sqrt{3} & \frac{3}{2} & 0
+   	    	\\ 0 & -\frac{\sqrt{3}}{2} & 0 & \frac{3}{2}
+   	    	\end{pmatrix}
+   	    	+ \begin{pmatrix}
+			1 & 0 & 0 & 0
+			\\0 & 1 & 0 & 0
+			\\0 & 0 & 1 & 0
+			\\0 & 0 & 0 & 1
+			\end{pmatrix}
+			\\& = &
+			\begin{pmatrix}
+			\frac{7}{2} & -\frac{1}{2} & \sqrt{3} & 0
+			\\\frac{1}{2} & \frac{5}{2} & 2\sqrt{3} & -\sqrt{3}
+			\\\sqrt{3} & -2\sqrt{3} & \frac{5}{2} & \frac{1}{2}
+			\\0 & -\sqrt{3} & -\frac{1}{2} & \frac{7}{2} 
+			\end{pmatrix}\nonumber 
+			\end{eqnarray}		
+			
+			Asi que la única opción es que $ (t-\frac{\sqrt{3}}{2})^2+\frac{1}{2}^2)^2 $ sea el polinomio minimal. 
+	\begin{exc}
+		Suponga que $ f $ es semi-simple y sea $ V_1 \leq V $ un subespacio invariante bajo $ f $. Demuestre que la restricción de $ f $ a$ V_1, f_1 \in \Hom_K (V_1,V_1) $ es semi-simple
+	\end{exc}
+		 
+\end{exc}
+
+
+\begin{proof}
+		Partiendo del hecho que que $ f $ es semisimple, para cualquier subespacio invariante $ U $ de $ V_1 $, y por lo tanto de todo el espacio $ V $, existe un subespacio invariante $ U' $ del espacio tal que $ U \oplus U' = V $. Ahora vamos a demostrar que $ U' \cap V_1 $ es tal que es invariante bajo la restricción de $ f $ y que $ U \oplus U' \cap V_1 = V_1 $.
+		
+		Para la primera parte obsérvese que $ f(U' \cap V_1)\subseteq f(U')\cap f(V_1) \subseteq U' \cap V_1$, porque ambos espacios son invariantes bajo $ f $. 
+		
+		Para la seguda parte primer tenemos que $ U + (U' \cap V_1) = V_1 $. Tome cualquier elemento  $ v \in V_1 $. Tenemos que $ v = u+u'$ donde $ u \in U $ y $ u' \in U' $, por la suposición inicial que $ U \oplus U' = V $. Pero como tenemos que $ v \in V_1 $ y $ u \in U \subseteq V_1 $ concluimos que $ u' = v-u \in V_1 $, por lo que $ v \in U + (U' \cap V_1) $.
+		
+		Finalmente también tenemos que $ U \cap (U' \cap V_1) = \{0\}  $, porque esta expresión es equivalente a $ (U \cap U') \cap V_1 = \{0\} \cap V_1 = \{0\}$.
+\end{proof}	
+
+\begin{exc}
+	Suponga que $ f $ es semi-simple, demuestre que existe una descomposición:
+	\[ V = V_1 \oplus \cdots \oplus V_r \]
+	tal que, para $ i = 1, \cdots, r, V_i $ es invariante bajo $ f $ y la restricción de este a $ V_i, f_i \in \Hom_K (V_i, V_i) $ es simple. (\textit{Ayuda: } Use inducción fuerte en $ n = \dim_K (V) $), es decir asuma que el resultado es cierto para todo operador en un espacio de dimensión estrictamente menor que $ n $ y use el punto anterior).
+	
+
+\end{exc}
+
+\begin{proof}
+	Primero consideremos el caso base cuando la dimensión de $ V $ es 1. En este caso los únicos subespacios posibles son $ \{0\} $ y $ V $ por lo que el espacio ya es simple de por si y $ V = V $ sería la descomposición buscada.
+		
+		Ahora suponga por inducción fuerte que la afirmación vale para todas las dimensiones menores a $ n $, la dimensión de $ V $.
+		
+		Si $ f $ es simple entonces, al igual que en el caso base,  ya tendriamos una descomposición. Así que si asumimos que $  f $ no es simple entonces existe algún subespacio invariante $ U $ tal que 0$ < $dim($ U $)$ < $dim($ V $), pero como es semi-simple existe otro espacio invariante $ U' $ tal que $ U \oplus U' = V $. Además también se cumple que  0$ < $dim($ U' $)$ < $dim($ V $) por propiedades de las dimensiones. Luego por nuestra hipótesis de inducción tenemos que $ U = V_1 \oplus \cdots \oplus V_s $ y $ U' = V_{s+1} \oplus \cdots \oplus V_{r} $ con $ r > s $. Por lo tanto, $ V = V_1 \oplus \cdots \oplus V_s \oplus V_{s+1} \oplus \cdots \oplus V_{r}$ es la descomposición buscada.
+\end{proof}
+
+\begin{exc}
+	Demuestre que el polinomio minimal de un operador semi-simple es un producto de polinomios irreducibles ninguno de ellos repetido (es decir, elevados únicamente a la primera potencia; es decir, sin cuadrados que lo dividan) usando los siguientes pasos:
+	\begin{enumerate}
+		\item Usando la descomposición del punto anterior, demuestre que el polinomio minimal de $ f_i $ divide al polinomio minimal de $ f $
+		\item Demuestre que el mínimo común múltiplos de los polinomios minimales de $ f_1, \ldots, f_r $  es el polinomio mínimal de $ f $. (\textit{Ayuda}: Sea $ P(t) $ este mínimo común múltiplo, dado $ v \in V $, tome $ v_i \in V_i, i = 1, \ldots, r, $ tales que $ v = v_1 + \ldots +v_r $, demuestre que $ P(f)(v) = P(f)(v_1) + \ldots + P(f)(v_r) = 0 + \ldots +0 = 0 $)
+		\item Concluya. (\textit{Ayuda: El polinomio minimal de un operador simple es irreducible.})
+		
+	
+	\end{enumerate}
+\end{exc}
+
+\textit{Solución}
+	\begin{enumerate}
+	\item Sea $ f \in \text{Hom}_K(V,V) $, un operador semi-simple. Entonces por el punto anterior $ V $ se puede descomponer como $ V = V_1 \oplus \cdots \oplus V_r $ tales que $ f_i $ es semi-simple donde $ f_i $ es la restricción de $ f $ en $ V_i $.
+	
+	Ahora tome $ P_{f_i,min} $ el polinomio minimal de $ f_i $. Por el algoritmo de la división tenemos que existen $ Q(x)$ y $ R(x) \in K[x] $ tales que $ P_{f,min}(x)=P_{f_i,min}Q(x)+R(x) $ y $ deg(R)< deg(P_{f_i,min}) $.
+	
+	Pero obsérvese que para todo $ v \in V_i $, $P_{f,min}(f_i)(v)=P_{f,min}(f)(v)=0 $. Luego evaluando toda la expresión anterior por $ f_i $ obtenemos que $ R(f_i)= 0 $. Por lo tanto $ R(x) $ debe ser igual a 0. De lo contrario existiria un polinomio de grado menor al polinomio minimal de $ f_i $ que anula a $ f_i $, contradicción.
+	
+	Por lo tanto $ P_{f_i,min} $ divide a  $ P_{f,min}
+	 $.
+	
+	\item Sea $ P(t) $ el minimo común multiplo de los polinomios minimales de todos los $ f_i $. Vamos a demostrar que $ P(t) $ divide $ P_{f,min}(t) $ y que $ P_{f,min}(t) $ divide a $ P(t) $ lo que implica que son iguales pues son polinomios mónicos.
+	
+	La primera parte se concluye del numeral anterior porque $ P_{f,min} $ es divisible por todos los $ P_{f_i,min} $ y por lo tanto es divisible por el mínimo común múltiplo $ P(t) $.
+	
+	Para la segunda parte vamos a demostrar que $ P(f) = 0 $. Tome cualquier $ v \in V $. Por nuestra descomposición podemos escribir $ v = v_1+\cdots v_r $ donde $ v_i \in V_i $. Entonces $ P(f)(v)=P(f)(v_1+\cdots v_r)=P(f)(v_1)+ \cdots P(f)(v_r) $.
+	
+	Pero para cualquier $ i $ tenemos que $ P(t) $ es divisible por $ P_{f_i,min}(t) $, es decir $ P(t)=Q_i(t)P_{f_i,min}(t) $, por lo tanto $ P(f)(v_i)= Q_i(f)P_{f_i,min}(f)(v_i) $ pero como se demostro en el numeral anterior esto es igual a 0. Concluimos que $ P(f)(v)=0+ \cdots + 0 = 0 $. Es decir que $ P $ anula el operador $ f $ y por lo tanto es divisible por el polinomio minimal de $ f $. Esto termina la demostración. 
+	
+	\item Primero probamos que el polinomio minimal de un operador simple es irreducible mediante la contrareciproca. Suponga que este no es el caso, entonces $ P_{f,min}(t) = A(t)B(t) $ donde $ A(t) $ y $ B(t) $ son polinomios no constantes.
+	
+	Pero en las notas de clase se tiene un teorema que indica que si $ P $ es un polinomio tal que anula a $ f $ y $ P(t) = A(t)B(t) $ entonces $ V $ se puede descomponer como la suma directa $ V = \text{ker}(A(f)) \oplus \text{ker}(B(f)) $ donde cada uno de los componentes es invariante.
+	
+	Pero además tenemos que $ \text{ker}(A(f)) \not = V $, o de lo contrario tendriamos que $ A(t) $ es un polinomio de grado menor al polinomio minimal que anula a $ f $. Y $ \text{ker}(A(f)) \not = 0 $ porque si no entonces  $ \text{ker}(B(f)) = V $ y entonces llegariamos a la misma contradicción anterior solo que con $ B(t) $.
+	Entonces concluimos que $ f $ no es simple.
+	
+	Por este resultado concluimos que $ P_{f,min} $ es el mínimo común múltiplo de polinomios irreducibles. Entonces vemos que $ P_{f,min}(t) $ es la multiplicación de cada uno de los diferentes polinomios irreducibles que aparecen, solo una vez.
+	\end{enumerate}
+
+\begin{exc}
+	Identifique entre los operadores $ g,h $ de $ \RR^4 $ ya definidos, cual es semi-simple y cual no lo es. Justifique su respuesta.
+	
+\end{exc}
+
+\textit{Solución}
+
+	Por lo discutido anteriormente concluimos que $ h $ no es semi-simple. Si lo fuera entonces su polinomio minimal deberia ser el producto de polinomios irreducibles no repetidos y ya demostramos que no es así.
+	
+	Resta por demostrar que $ g $ es semi-simple y este es el caso porque es una matriz diagonalizable por bloques simples. Los espacios invariantes no triviales son $ Sp(u_1,-v_1) $ y $ Sp(u_1,-v_1) $ y su suma directa de todo $ V $. 
+\end{document}

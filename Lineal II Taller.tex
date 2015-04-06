@@ -1,0 +1,54 @@
+\documentclass[letter,twoside,12pt]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fullpage}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\title{Algebra Lineal II: Taller}
+\newtheorem{lemma}{Lema}
+\author{Jonathan Andrés Niño Cortés}
+\begin{document}
+\maketitle
+
+\begin{itemize}
+\item Dividiendo $ P_f(x) $ por $ P_{f,min}(x) $ obtenemos dos polinomios $ Q(x) $ y $ R(x) $ tales que 
+
+\begin{equation}
+P_f(x)=Q(x)P_{f,min}(x)+R(x) \nonumber
+\end{equation} 
+
+y $ deg(R)<deg(P_{f,min}) $.
+
+Ahora si evaluamos estos polinomios tenemos que $ P_f(f)=0 $ por el teorema de Calley-Hamilton y $ P_{f,min}=0 $ por la definición del polinomio minimal. Concluimos por lo tanto que $ R(f)=0 $ pero para que no contradiga la minimalidad del polinomio local concluimos que $ R(x)=0 $. Por lo tanto, el polinomio caracteristico es un multiplo del polinomio minimal.
+
+\item La matriz asociada a esta transformación es
+
+\begin{equation}
+A=\begin{pmatrix}
+\lambda & 1
+\\0 & \lambda
+\end{pmatrix} \nonumber
+\end{equation}
+
+Y el polinomio característico se calcula como
+
+\begin{equation}
+\begin{vmatrix}
+t-\lambda & -1
+\\0 & t- \lambda
+\end{vmatrix} = (t-\lambda)^2 \nonumber
+\end{equation}.
+
+Por el punto anterior, el polinomio minimal en este caso puede ser $ t-\lambda $ o $ (t-\lambda)^2 $. Pero para descartar el primer caso podemos tomar por ejemplo el vector $ (0,1) $. Tenemos que $ (f-\lambda Id)(0,1)=(1,\lambda)-(0,\lambda)=(1,0) \not = (0,0)$. Por lo tanto, el polinomio minimal es $ (t-\lambda)^2 $.
+
+\item Esta transformación es precisamente multiplicación por $ \lambda $, es decir, $ f= \lambda Id $. El polinomio caracteristico de esta transformación es el mismo que el anterior $ (t- \lambda)^2 $ pero en este caso el polinomio minimal si es $ t-\lambda $. Esto porque $ f-\lambda Id = \lambda Id - \lambda_Id = 0 $. Esta transformación es semi-simple porque cualquier subespacio $ V $ es invariante, pues $ f(V)= \lambda V \subseteq V $.  
+
+\end{itemize}
+\end{document}
