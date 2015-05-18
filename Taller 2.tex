@@ -1,0 +1,224 @@
+\documentclass[letter,twoside,12pt]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fullpage}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\title{Taller 2: Álgebra Lineal 2}
+\newtheorem{theo}{Teorema}
+\newtheorem{lemma}[theo]{Lema}
+\newtheorem*{defi}{Definición}
+\author{Jonathan Andrés Niño Cortés}
+\usepackage{amsfonts}
+\usepackage{psfrag}
+\frenchspacing
+\newcommand{\Sp}{\textrm{Sp}}
+\newcommand{\Hom}{\textrm{Hom}}
+\newcommand{\id}{\textrm{id}}
+
+
+
+\begin{document}
+\pagestyle{empty}
+\maketitle
+\vspace{0.5cm}
+
+Sean $K$ un cuerpo de caracter\'istica diferente de $2$ (e.d. $1+1\ne 0$) y $(V,\sigma)$ un espacio simpl\'ectico sobre $K$ de dimensi\'on finita. Denote $2n=\dim(V)$, $n>0$. Sea $f$ un operador en $V$ auto-adjunto (e.d. $f\in\Hom_K(V,V)$, y $\sigma(v,f(w))=\sigma(f(v),w)$ para todo $v,w\in V$).
+
+\begin{itemize}
+\item Sea $U\le V$. Demuestre que $U$ es un subespacio simpl\'ectico de $V$ si y solo si $U\cap U^\sigma=\{0\}$.
+
+\begin{proof}
+Suponga primero que $ \sigma $ restringido a $ U \times U $ es un espacio simpléctico. Entonces la propiedad no degenerativa implica que si $ u \in U $ es tal que para todo $ u' \in U $, $ \sigma(u,u')=0 $ entonces $ u = 0 $. Utilizando la propiedad que $ \sigma(u,u')=-\sigma(u',u) $ entonces tenemos de manera equivalente que si para todo $ u' \in U $ se cumple que $ \sigma(u',u) = 0 $ entonces $ u = 0 $. Pero esto implica que cualquier elemento $ v \in U^\sigma \cap U $ que por definición es un elemento en $ U $ tal que $ \sigma(u,v)=0 $ para todo $ u \in U $, debe ser igual a 0. Por lo tanto, $ U \cap U^\sigma = \{0\} $.
+
+Para el converso asuma que $ U \cap U^\sigma = \{0\} $. Vemos que $ \sigma $ restringido a $ U $ es bilineal y alternante solo por el hecho que $ U $ es un subespacio de $ V $. Para ver que es no-degenerada basta ver si $ u  \in V $ es tal que $ \sigma(u',u)=0 $ para todo $ u' \in U $ entonces $ u = 0 $ y los $ u $ son precisamente el conjunto $ U \cap U^\sigma= \{0\} $ por lo que efectivamente $ u = 0 $. 
+\end{proof}
+
+\item Sea $P(t)\in K$. Demuestre que $P(f)$ es auto-adjunto. (\emph{Sugerencia}: demuestre primero que una combinación lineal de operadores auto-adjuntos es auto-adjunto y que una potencia de un operador auto-adjunto es autoadjunto.)
+
+\begin{proof}
+Sean $ f $ y $ g $ dos operadores auto-adjuntos y sea $ a,b \in K $. Entonces tenemos que
+\begin{eqnarray}
+\sigma((a\cdot f+b\cdot g)(u),v)&=&\sigma(af(u)+bg(u),v) \nonumber
+\\&=& a\sigma(f(u),v)+b\sigma(g(u),v) \text{ (Bilinealidad)}\nonumber
+\\&=& a\sigma(u,f(v))+b\sigma(u,g(v)) \text{ ($f$ y $ g $ auto-adjuntos)}\nonumber
+\\&=& \sigma(u,af(v)+bg(v))\text{ (Bilinealidad)}\nonumber
+\\&=& \sigma(u,(a \cdot f+b \cdot g)(v))\nonumber
+\end{eqnarray}
+
+Por lo que cualquier combinación lineal de operadores auto-adjuntos es auto-adjunto.
+
+Ahora sea $ f $ un operador auto-adjunto y $ n \in \mathbb{N} $ y considere $ f^n = \underbrace{f \circ \cdots \circ f}_\text{$n$- veces} $.
+
+Vamos a demostrar por inducción que $ f^n $ es auto-adjunto. Para el caso base observese que si $ n=0 $ entonces $ f^0=id $ y $ \sigma(id(u),v)=\sigma(u,id(v)) $. Ahora para el paso inductivo asuma que $ f^{n-1} $ es auto-adjunto. Entonces
+
+\begin{eqnarray}
+\sigma(f^{n}(u),v)&=&\sigma(f(f^{n-1}(u)),v) \nonumber
+\\&=&\sigma(f^{n-1}(u),f(v)) \nonumber
+\\&=&\sigma(u,f^{n-1}(f(v))) \nonumber
+\\&=&\sigma(u,f^n(v)) \nonumber
+\end{eqnarray} 
+
+Por lo tanto, $ f^n $ también es auto-adjunto.
+\end{proof}
+
+\item Suponga que $f$ es una proyecci\'on. Demuestre que $U=f(V)$ es un subespacio simpl\'ectico.
+
+\begin{proof}
+Sea $ u \in U $ tal que para todo $ u' \in U $, $ \sigma(u,u')=0 $.
+
+Entonces tenemos que $ u = f(v)$ y que $ u' = f(v') $ para algunos $ v $ y $ v' \in V $. Por otro lado, tenemos que
+
+\begin{eqnarray}
+0 &=& \sigma(u,u') \nonumber
+\\&=& \sigma(f(v),f(v')) \nonumber
+\\&=&\sigma(f(f(v)),v') \text{ (Auto-adjunto)} \nonumber 
+\\&=&\sigma(f(v)),v') \text{ (Idempotencia)} \nonumber 
+\\&=&\sigma(u,v') \nonumber
+\end{eqnarray}
+
+Vemos por lo tanto que $ \sigma(u,v')=0 $ para todo $ v' \in V $ (esto porque $ f^{-1}(U)=V $). Luego como $ V $ es simplectico esto implica que $ u = 0 $, lo que implica a su vez que $ U $ también es simpléctico.
+\end{proof}
+
+\item Suponga que $$P_f(t)=\prod_{i=1}^r (t-\lambda_i)^{m_i}\quad \lambda_1,\ldots,\lambda_r\in K;$$ y, para $i=1,\ldots,r$ defina $$V_i=\ker\left((f-\lambda_i\id_V)^{m_i}\right).$$ Demuestre que para $i=1,\ldots,r$, $V_i\le V$ es subespacio simpléctico.
+
+\begin{proof}
+Por la propiedad 2.20 tenemos que para cada $ i $ existe un polinomio $ \Pi_i(t) \in K[t] $ tal que $ \Pi_i(f) = p_i $ donde $ p_i $ es la proyección sobre el espacio $ V_i $. Anteriormente demostramos que cualquier polinomio de $ f $ es auto-adjunto por lo que $ p_i $ es auto-adjunto y además en el literal anterior demostramos que la imagen de una proyección auto-adjunto es un subespacio simpléctico. Luego, cada $ V_i $ es un subespacio simpléctico.
+\end{proof}
+
+\item Suponga que $f$ es nilpotente y sea $V_0\le V$ un subespacio c\'iclico bajo $f$. Sea $v\in V_0$ tal que $\{v,f(v),\ldots,f^{d-1}(v)\}$ es una base de $V_0$.
+\begin{enumerate}
+\item Demuestre que $V_0$ es isotr\'opico.
+
+\begin{proof}
+Por la Proposición 6.13, debemos demostrar que $ \sigma(u,u')= 0 $ para todo $ u,u' \in V_0 $. Por nuestra suposición, $ u = \sum_{i=0}^{d-1}a_if^i(v) $ y $ u' = \sum_{i=0}^{d-1}a'_if^i(v) $, con $ a_i $ y $ a'_i \in K $.
+
+Entonces por bilinealidad tenemos que
+\begin{eqnarray} 
+\sigma(u,u')&=& \sigma(\sum_{i=0}^{d-1}a_if^i(v),\sum_{j=0}^{d-1}a'_jf^j(v)) \nonumber
+\\&=& \sum_{i=0}^{d-1}a_i\sigma(f^i(v),\sum_{j=0}^{d-1}a'_jf^j(v)) \nonumber
+\\&=& \sum_{i=0}^{d-1}\sum_{j=0}^{d-1}a_ia'_j\sigma(f^i(v),f^j(v)) \nonumber
+\end{eqnarray} 
+
+Pero obervese que $ \sigma(f^{i}(v),f^{j}(v))= 0$ para cualesquiera $ 0\leq i,j < d $. Supongamos primero que $ i \leq j $. Entonces si tomamos $ k = j-i \geq 0 $ tenemos que $ f^{j}(v)=f^k(f^i(v)) $. Entonces como probamos que $ f^{k} $ es auto-adjunta también tenemos que
+
+\begin{eqnarray}
+\sigma(f^{i}(v),f^{j}(v)) &=& \sigma(f^{i}(v),f^k(f^i(v))) \nonumber
+\\&=& \sigma(f^k(f^{i}(v)),f^i(v)) \text{ ($f$ es autoadjunto)} \nonumber
+\\&=& -\sigma(f^i(v),f^k(f^{i}(v))) \text{ (Alternante)} \nonumber
+\\&=& -\sigma(f^{i}(v),f^{j}(v)) \nonumber
+\end{eqnarray}
+
+Por lo tanto, $ \sigma(f^{i}(v),f^{j}(v)) = 0 $. El caso en que $ i > j $ es análogo al anterior.
+
+Finalmente concluimos que 
+
+\begin{eqnarray} 
+\sigma(u,u')=\sum_{i=0}^{d-1}\sum_{j=0}^{d-1}a_ia'_j\sigma(f^i(v),f^j(v)) = \sum_{j=0}^{d-1}a_ia'_j0 = 0 \nonumber.
+\end{eqnarray}
+
+por lo que $ V_0 $ es isotrópico.
+\end{proof}
+
+\item Sea $w\in V$ tal que $\sigma(w,f^{d-1}(v))\ne 0$. Demuestre que para, $i=1,\ldots,d$, $\sigma(f^{i-1}(w),f^{d-i}(v))\ne 0$.
+\begin{proof}
+Podemos demostrar esto usando inducción sobre $ i $. El caso base es cuando $ i = 1 $ y tenemos por suposición que $ \sigma(w,f^{d-1}(v)) \not = 0 $. Ahora supongamos que $\sigma(f^{i-2}(w),f^{d-i+1}(v))\ne 0 $ entonces como $ f $ es autoadjunto tenemos que $ (f^{i-2}(w),f^{d-i+1}(v)) = (f(f^{i-2}(w)),f^{d-i}(v))= (f^{i-1}(w),f^{d-i}(v)) \not = 0 $, lo cual concluye la demostración. 
+\end{proof}
+\item Demuestre que si $w\in V$ es tal que $\sigma(w,f^{d-1}(v))\ne 0$, $$U=\Sp(\{v,\ldots,f^{d-1}(v),f^{d-1}(w),\ldots,w\})$$ es un subespacio simpl\'ectico.
+\begin{proof}
+Primero, la definición de espacio cíclico implica que $ f^d(v)=0 $. Por otra parte, podemos demostrar que si $ i+j\geq d $ entonces $ \sigma(f^i(v),f^j(w))= \sigma(f^i(w),f^j(v))=0 $. Esto porque podemos demostrar de manera análoga al numeral anterior que $ \sigma(f^i(v),f^j(w))=\sigma(f^d(v),f^{i+j-d}(w))=\sigma(0,f^{i+j-d}(w)) = 0 $.
+
+Por lo tanto, tomemos $ u \in U $ tal que para todo $ u' \in U $, $ \sigma(u,u')=0 $ y probemos que debe ser igual a 0. Como tenemos una base para $ U $ podemos escribir $ u = a_1v+a_2f(v)+\cdots + a_if^{i-1}(v)+ \cdots +a_df^{d-1}(v) + a_{d+1}f^{d-1}(w)+\cdots + a_{d+j}f^{d-j}(w)+ \cdots + a_{2d}w $.
+
+En particular, tenemos que $ \sigma(u,v)=0 $ luego por bilinealidad obtenemos la ecuación $$ \sigma(u,v) = a_1\sigma(v,v)+\cdots + a_i\sigma(f^{i-1}(v),v)+ \cdots +a_d\sigma(f^{d-1}(v),v) +$$ $$ a_{d+1}\sigma(f^{d-1}(w),v)+\cdots + a_{d+j}\sigma(f^{d-j}(w),v)+ \cdots + \sigma(a_{2d}w,v) = 0 $$.
+
+Pero por el primer numeral, como $ V_0 $ es isotrópico concluimos que todo los términos de la forma $ \sigma(f^{i-1}(v),v) $ son iguales a 0.
+
+Ahora si tomamos en general $ \sigma(u,f^{i-1}(v))=0 $ obtenemos la ecuación $$ a_{d+1}\sigma(f^{d-1}(w),f^{i-1}(v))+\cdots + a_{d+j}\sigma(f^{d-j}(w),f^{i-1}(v))+ \cdots + \sigma(a_{2d}w,f^{i-1}(v)) = 0 $$. Entonces obtenemos un sistema de $ d $ ecuaciones con $ d $ variables $ \{a_{d+1},\cdots, a_{d+j},\cdots,a_{2d}\} $. Vemos que la matriz asociada va a ser tal que la $ ij $-ésima entrada es igual a $ \sigma(f^{d-j}(w),f^{i}(v)) $.
+
+Pero por lo discutido anteriormente todas las entradas tales que $ i+j\geq d $ van a ser iguales a 0. Luego la matriz resultante es una matriz triangular superior cuyas entradas en la diagonal son diferentes a cero por el numeral anterior. Luego, el kernel de esta matriz es igual a 0, es decir que todos los coeficientes entre $ a^{d+1} $ y $ a{2d} $ son iguales a 0.
+
+De manera similar tomando las expresiones $ \sigma(u,f^{d-j}(w))= 0 $ podemos hacer un sistema de $ d $ ecuaciones y $ d $ incognitas $ \{a_1,\cdots,a_i,\cdots,a_d\} $ que también tiene asociada una matriz triangulas superior con todas sus entradas en la diagonal diferentes de cero y que por lo tanto implica que todos los coeficientes desde $ a_1 $ hasta $ a_d $ son iguales a 0. Por lo tanto $ u = 0 $ y el espacio es un espacio simpléctico.
+
+
+
+
+\end{proof}
+\item Demuestre que si $w\in V$ es tal que $\sigma(w,f^{d-1}(v))\ne 0$ y $$U=\Sp(\{v,\ldots,f^{d-1}(v),f^{d-1}(w),\ldots,w\})$$ entonces existe una base de Darboux de $U$, $$T=\{v_1,\ldots,v_{d},w_1,\ldots,w_{d}\}$$ tal que $v_i=f^{i-1}(v_1)$ y $w_i=f^{d-i}(w_d)$. Demuestre adem\'as que $f(w_1)=0$. (\emph{Sugerencia}: A partir de la base de $U$ obtenida en el punto anterior, recursivamente, empiece con $w$ tal que $\sigma(w,f^{d-1}(v))=1$, y defina $w'=w-af(w)$ tal que $\sigma(w',f^{d-2}(v))=0$, luego $w''=w'-bf^2(w')$ tal que $\sigma(w'',f^{d-3}(v))=0$ y as\'i sucesivamente hasta completar $d-1$ pasos y obtener el $w_{d}$ buscado.)
+
+\begin{proof}
+Tome $ v_1 = v $ y sea $ w_d = w^{(d-1)} $ el elemento encontrado en la recursión descrita en la sugerencia. Podemos encontrar un $ w $ tal que $\sigma(w,f^{d-1}(v)) = 1 $ mediante normalización. Además tomamos $ w' = w - \sigma(w,f^{d-2}(v))f(w) $. Entonces $ \sigma(w',f^{d-2}(v)) =\sigma(w-\sigma(w,f^{d-2}(v))f(w),f^{d-2}(v)) = \sigma(w,f^{d-2}(v))-\sigma(w,f^{d-2}(v))\sigma(f(w),f^{d-2}(v)) = \sigma(w,f^{d-2}(v))-\sigma(w,f^{d-2}(v)) = 0 $. Similarmente tomamos $ w'' = w'-\sigma(w',f^{d-3}(v))f^2(w) $ y vemos que $ \sigma(w'',f^{d-3}(v)) =\sigma(w'-\sigma(w',f^{d-3}(v))f^2(w),f^{d-3}(v)) = \sigma(w',f^{d-3}(v))-\sigma(w',f^{d-3}(v))\sigma(f^2(w),f^{d-3}) = \sigma(w',f^{d-2}(v))-\sigma(w',f^{d-2}(v)) = 0 $. Y asi sucesivamente hasta llegar al $ w_d $ buscado.
+
+Entonces veamos que $ \sigma(w_d,f^{d-1}(v))=1 $ esto lo podemos demostrar mediante inducción, pues ya tenemos el caso base y si asumimos que $ \sigma(w^{(n)},f^{d-1}(v))=1 $ entonces $ \sigma(w^{(n+1)},f^{d-1}(v))= \sigma(w^{(n)}-\sigma(w^{(n)},f^{d-n-i}(v))f^{n+1}(w),f^{d-1}(v)) = \sigma(w^{(n)},f^{d-1}(v))-\sigma(w^{(n)},f^{d-n-i}(v))\sigma(f^{n+1}(w),f^{d-1}(v)) = \sigma(w^{(n)},f^{d-1}(v)) = 1 $ porque  $ \sigma(f^{n+1}(w),f^{d-1}(v)) = 0 $. Pero además $ \sigma(w_d,f^{j-1}(v))=0 $ si $ 1 \leq j <d $ .
+
+Esto porque para cada $ j < d $, si tomamos $ w^{(d-j)} $ tenemos por construcción que $ \sigma(w^{(d-j)},f^{j-1}(v)) = 0 $, entonces de nuevo por inducción tomando lo anterior como caso base tenemos que $ \sigma(w_d,f^{j-1}(v))=0 $, esto porque si $ \sigma(w^{(n)},f^{j-1})= 0 $ entonces por un lado $ n\geq d-j $ y por el otro $ \sigma(w^{(n+1)},f^{j-1}) = \sigma(w^{(n)}-\sigma(w^{(n)},f^{d-n-i}(v))f^{n+1}(w),f^{j-1}(v)) = \sigma(w^{(n)},f^{j-1}(v))-\sigma(w^{(n)},f^{d-n-i}(v))\sigma(f^{n+1}(w),f^{j-1}(v)) = \sigma(w^{(n)},f^{j-1}(v)) = 0 $ porque  $ \sigma(f^{n+1}(w),f^{j-1}(v)) = 0 $ si $ n \geq d-j $.
+
+Finalmente vamos a demostrar que $ T $ es una base de Darboux para $ U $. Por el numeral 1 tenemos que $ \sigma(v_i,v_j)=\sigma(w_i,w_j)=0 $ para $ i,j \in \{1,\cdots, j\} $. Por otra parte tenemos que si $ i+j = i'+j' $ entonces $ \sigma(f^i(w),f^j(v))=\sigma(f^{i'}(w),f^{j'}(v)) $. Por lo tanto, $ \sigma(v_i,w_j)= \sigma(f^{i-1}(v_1),f^{d-j}(w_d)) = -\sigma(f^{d-j}(w_d),f^{i-1}(v_1)) $ y esto ultimo es igual a -1 si $ i-1+d-j=d-1 $, es decir, si $ i = j $ y $ 0 $ de lo contrario, por lo tanto $\sigma(v_i,w_j)=-\delta_{ij}  $ y $ T $ es por lo tanto una base de Darboux.  
+\end{proof}
+\end{enumerate}
+
+\item Demuestre que existe una base de Darboux $T$ y una matriz $A\in M_{n\times n}(K)$ tal que $$\Big[f\Big]^T_T=\left[\begin{array}{cc} A & 0\\ 0 & A^\intercal\end{array}\right]$$.
+
+\begin{proof}
+Ya se ha demostrado que para cualquier base $ S $ si la representación matricial de $ f $ es
+$$\Big[f\Big]^S_S=\left[\begin{array}{cc} A_{11} & A_{12}\\ A_{21} & A_{22}\end{array}\right]$$ entonces la representación del adjunto de $ f $, $ g $ es igual a
+$$\Big[g\Big]^S_S=\left[\begin{array}{cc} A_{22}^\intercal & -A_{12}^\intercal\\ -A_{21}^\intercal & A_{11}^\intercal\end{array}\right]$$ y por lo tanto si el operador es autoadjunto entonces tenemos que $ A_{11}=A_{22}^\intercal $. Solo nos falta demostrar que existe una base de Darboux tal que $ A_{12} $ y $ A_{21} $ son iguales a 0. Esta base la podemos obtener de la misma manera que se obtiene la forma canónica de Jordan. El resultado es una matriz diagonal con bloques que cumple los requisitos establecidos.
+\end{proof}
+
+\item Sea $F\in M_{6\times 6}(K)$ la matriz
+$$F=\left[
+\begin{array}{rrrrrr}
+-1 & 4 & 0 & 0 & -1 & 0\\
+-2 & -1 & 0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0\\
+0 & 8 & 0 &-1 & -2 & 0\\
+-8 & 0 & 0 & 4 & -1 & 0\\
+0 & 0 & 0 & 0 & 0 & 1
+\end{array}
+\right]$$
+Encuentre una matriz simpl\'ectica $S\in M_{6\times 6}(K)$ y una matriz $A\in M_{3\times 3}(K)$ tales que
+$$ S^{-1}FS=\left[\begin{array}{cc} A & 0\\ 0 & A^\intercal\end{array}\right]$$.
+
+\begin{proof}
+Sea $ f $ la transformación asocada a la matriz $ F $. El polinomio característico de esta matriz es $ P(x) = (x-1)^2(x+1)^4 $. Esto nos da los valores propios $ -1 $ y $ 1 $. Entonces por lo demostrado anteriormente tenemos que $ \text{ker}((f-id_V)^{2}) $ y $ \text{ker}((f+id_V)^4) $ son espacios simplécticos. Ahora, los vectores propios asociados a 1 son $ (0,0,1,0,0,0) $ y $ (0,0,0,0,0,1) $. Por otra parte los vectores asociados al valor propio $ -1 $ son $ (0, 1, 0, 0, 4, 0) $, y $ (1, 0, 0, 2, 0, 0) $. Y los vectores cíclicos de grado 2 de este espacio son $ (1,0,0,0,0,0) $ y $ (0,0,0,1,0,0) $ y $ (f+id_v)(1,0,0,0,0,0)=(0,-2,0,0,-8,0)$ y $ (0,0,0,0,1,0) $ es un vector tal que el producto simpléctico $ \sigma((0,0,0,0,1,0),(0,-2,0,0,-8,0))=-2 \not = 0 $. Entonces, aplicamos el método para calcular la base de Darboux mostrada en el númeral cuatro del punto anterior. Primero tomamos $ w = -\frac{1}{2}(0,0,0,0,1,0) $, ahora tomemos $ w' = w-\sigma(w,v)(f+id_v)(w)= (0,0,0,0,-\frac{1}{2},0)-0*(f+id_v)(w)=0  $. Entonces $ \{(1,0,0,0,0,0),(0,-2,0,0-8,0),(1/2,0,0,1,0,0),(0,0,0,0,-1/2,0)\} $ es una base de Darboux para este espacio simpléctico. Por lo tanto, la base de Darboux $ T = \{(1,0,0,0,0,0),(0,-2,0,0-8,0),(0,0,1,0,0,0),(1/2,0,0,1,0,0),(0,0,0,0,-1/2,0),(0,0,0,0,0,1)\} $. Entonces
+
+$$ S = \begin{pmatrix}
+ 1 & 0 & 0 & 1/2 & 0 & 0
+\\0 & -2 & 0 & 0 & 0 & 0
+\\0 & 0 & 1 & 0 & 0 & 0
+\\0 & 0 & 0 & 1 & 0 & 0
+\\0 & -8 & 0 & 0 & -1/2 & 0
+\\0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}  $$
+
+Y  $$ S^{-1} = \begin{pmatrix}
+ 1 & 0 & 0 & -1/2 & 0 & 0
+\\0 & -1/2 & 0 & 0 & 0 & 0
+\\0 & 0 & 1 & 0 & 0 & 0
+\\0 & 0 & 0 & 1 & 0 & 0
+\\0 & 8 & 0 & 0 & -2 & 0
+\\0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix} $$ por lo que vemos que la matriz es simpléctica. Y $$ S^{-1}FS = \begin{pmatrix}
+ -1 & 0 & 0 & 0 & 0 & 0
+\\1 & -1 & 0 & 0 & 0 & 0
+\\0 & 0 & 1 & 0 & 0 & 0
+\\0 & 0 & 0 & -1 & 1 & 0
+\\0 & 0 & 0 & 0 & -1 & 0
+\\0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix} $$
+
+Por lo que $$ A = \begin{pmatrix}
+ -1 & 0 & 0
+\\1 & -1 & 0
+\\0 & 0 & 1
+\end{pmatrix} $$ es la matriz buscada.
+\end{proof} 
+\end{itemize}
+\end{document}
